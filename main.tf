@@ -18,7 +18,8 @@
 
 #impersonate service account
 provider "google" {
-  impersonate_service_account = "terraform@${local.project}.iam.gserviceaccount.com"
+  project                     = var.project_id
+  impersonate_service_account = "terraform@${var.project_id}.iam.gserviceaccount.com"
 }
 data "google_project" "project" {
   project_id = var.project_id
