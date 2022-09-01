@@ -26,7 +26,7 @@ data "google_project" "project" {
 
 locals {
   default_ack_deadline_seconds = 30
-  default_msg_retention        = 604800
+  default_msg_retention        = "604800s"
   pubsub_svc_account_email     = "service-${data.google_project.project.number}@gcp-sa-pubsub.iam.gserviceaccount.com"
 }
 
