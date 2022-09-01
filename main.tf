@@ -25,7 +25,8 @@ data "google_project" "project" {
 }
 
 locals {
-  default_ack_deadline_seconds = 10
+  default_ack_deadline_seconds = 30
+  default_msg_retention        = 604800
   pubsub_svc_account_email     = "service-${data.google_project.project.number}@gcp-sa-pubsub.iam.gserviceaccount.com"
 }
 
@@ -136,7 +137,7 @@ resource "google_pubsub_subscription" "push_subscriptions" {
   message_retention_duration = lookup(
     each.value,
     "message_retention_duration",
-    null,
+    local.default_msg_retention,
   )
   retain_acked_messages = lookup(
     each.value,
@@ -214,7 +215,7 @@ resource "google_pubsub_subscription" "pull_subscriptions" {
   message_retention_duration = lookup(
     each.value,
     "message_retention_duration",
-    null,
+    local.default_msg_retention,
   )
   retain_acked_messages = lookup(
     each.value,
