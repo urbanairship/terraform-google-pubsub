@@ -59,6 +59,7 @@ variable "push_subscriptions" {
   }))
   description = "The list of the push subscriptions."
   default = [{
+    name                       = null
     ack_deadline_seconds       = null
     push_endpoint              = null
     x-goog-version             = null
@@ -89,6 +90,7 @@ variable "pull_subscriptions" {
   }))
   description = "The list of the pull subscriptions."
   default = [{
+    name                         = null
     ack_deadline_seconds         = null
     dead_letter_topic            = null
     max_delivery_attempts        = null
