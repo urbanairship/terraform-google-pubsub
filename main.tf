@@ -205,7 +205,11 @@ resource "google_pubsub_subscription" "pull_subscriptions" {
   name    = each.value.name
   topic   = var.create_topic ? google_pubsub_topic.topic.0.name : var.topic
   project = var.project_id
-  labels  = var.subscription_labels
+  labels = lookup(
+    each.value,
+    "subscriptions_labels",
+    local.default_subscription_label,
+  )
   enable_exactly_once_delivery = lookup(
     each.value,
     "enable_exactly_once_delivery",
