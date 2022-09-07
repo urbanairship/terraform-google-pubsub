@@ -42,39 +42,13 @@ variable "topic_labels" {
 }
 
 variable "push_subscriptions" {
-  type = list(map(object({
-    name                       = string
-    ack_deadline_seconds       = string
-    push_endpoint              = string
-    x-goog-version             = string
-    oidc_service_account_email = string
-    audience                   = string
-    expiration_policy          = string
-    dead_letter_topic          = string
-    max_delivery_attempts      = string
-    maximum_backoff            = string
-    minimum_backoff            = string
-    filter                     = string
-    subscription_labels        = map(string)
-  })))
+  type = list(map(any))
   description = "The list of the push subscriptions."
   default     = []
 }
 
 variable "pull_subscriptions" {
-  type = list(map(object({
-    name                         = string
-    ack_deadline_seconds         = string
-    dead_letter_topic            = string
-    max_delivery_attempts        = string
-    maximum_backoff              = string
-    minimum_backoff              = string
-    filter                       = string
-    enable_message_ordering      = string
-    service_account              = string
-    enable_exactly_once_delivery = string
-    subscription_labels          = map(string)
-  })))
+  type = list(map(any))
   description = "The list of the pull subscriptions."
   default     = []
 }
