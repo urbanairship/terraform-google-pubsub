@@ -42,7 +42,7 @@ variable "topic_labels" {
 }
 
 variable "push_subscriptions" {
-  type = list(map(object({
+  type = list((object({
     name                       = string
     ack_deadline_seconds       = string
     push_endpoint              = string
@@ -62,7 +62,7 @@ variable "push_subscriptions" {
 }
 
 variable "pull_subscriptions" {
-  type = list(map(object({
+  type = list((object({
     name                         = string
     ack_deadline_seconds         = string
     dead_letter_topic            = string
