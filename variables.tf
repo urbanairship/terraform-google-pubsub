@@ -44,17 +44,17 @@ variable "topic_labels" {
 variable "push_subscriptions" {
   type = list(map(object({
     name                       = string
-    ack_deadline_seconds       = string
-    push_endpoint              = string
-    x-goog-version             = string
-    oidc_service_account_email = string
-    audience                   = string
-    expiration_policy          = string
-    dead_letter_topic          = string
-    max_delivery_attempts      = string
-    maximum_backoff            = string
-    minimum_backoff            = string
-    filter                     = string
+    ack_deadline_seconds       = optional(string)
+    push_endpoint              = optional(string)
+    x-goog-version             = optional(string)
+    oidc_service_account_email = optional(string)
+    audience                   = optional(string)
+    expiration_policy          = optional(string)
+    dead_letter_topic          = optional(string)
+    max_delivery_attempts      = optional(string)
+    maximum_backoff            = optional(string)
+    minimum_backoff            = optional(string)
+    filter                     = optional(string)
     subscription_labels        = map(string)
   })))
   description = "The list of the push subscriptions."
@@ -63,16 +63,16 @@ variable "push_subscriptions" {
 
 variable "pull_subscriptions" {
   type = list(map(object({
-    name                         = string
-    ack_deadline_seconds         = string
-    dead_letter_topic            = string
-    max_delivery_attempts        = string
-    maximum_backoff              = string
-    minimum_backoff              = string
-    filter                       = string
-    enable_message_ordering      = string
-    service_account              = string
-    enable_exactly_once_delivery = string
+    name                         = optional(string)
+    ack_deadline_seconds         = optional(string)
+    dead_letter_topic            = optional(string)
+    max_delivery_attempts        = optional(string)
+    maximum_backoff              = optional(string)
+    minimum_backoff              = optional(string)
+    filter                       = optional(string)
+    enable_message_ordering      = optional(string)
+    service_account              = optional(string)
+    enable_exactly_once_delivery = optional(string)
     subscription_labels          = map(string)
   })))
   description = "The list of the pull subscriptions."
