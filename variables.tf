@@ -58,7 +58,19 @@ variable "push_subscriptions" {
     subscription_labels        = map(string)
   }))
   description = "The list of the push subscriptions."
-  default     = [null]
+  default = [{
+    ack_deadline_seconds       = null
+    push_endpoint              = null
+    x-goog-version             = null
+    oidc_service_account_email = null
+    audience                   = null
+    expiration_policy          = null
+    dead_letter_topic          = null
+    max_delivery_attempts      = null
+    maximum_backoff            = null
+    minimum_backoff            = null
+    filter                     = null
+  subscription_labels = null }]
 }
 
 variable "pull_subscriptions" {
@@ -76,7 +88,17 @@ variable "pull_subscriptions" {
     subscription_labels          = map(string)
   }))
   description = "The list of the pull subscriptions."
-  default     = [null]
+  default = [{
+    ack_deadline_seconds         = null
+    dead_letter_topic            = null
+    max_delivery_attempts        = null
+    maximum_backoff              = null
+    minimum_backoff              = null
+    filter                       = null
+    enable_message_ordering      = null
+    service_account              = null
+    enable_exactly_once_delivery = null
+  subscription_labels = null }]
 }
 
 variable "topic_message_retention_duration" {
