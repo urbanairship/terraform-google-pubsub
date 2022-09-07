@@ -42,7 +42,7 @@ variable "topic_labels" {
 }
 
 variable "push_subscriptions" {
-  type = object({
+  type = list(object({
     name                       = string
     ack_deadline_seconds       = string
     push_endpoint              = string
@@ -56,13 +56,13 @@ variable "push_subscriptions" {
     minimum_backoff            = string
     filter                     = string
     subscription_labels        = map(string)
-  })
+  }))
   description = "The list of the push subscriptions."
-  default     = null
+  default     = []
 }
 
 variable "pull_subscriptions" {
-  type = object({
+  type = list(object({
     name                         = string
     ack_deadline_seconds         = string
     dead_letter_topic            = string
@@ -74,9 +74,9 @@ variable "pull_subscriptions" {
     service_account              = string
     enable_exactly_once_delivery = string
     subscription_labels          = map(string)
-  })
+  }))
   description = "The list of the pull subscriptions."
-  default     = null
+  default     = []
 }
 
 variable "topic_message_retention_duration" {
