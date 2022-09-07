@@ -58,7 +58,7 @@ variable "push_subscriptions" {
     subscription_labels        = map(string)
   })
   description = "The list of the push subscriptions."
-  default     = {}
+  default     = null
 }
 
 variable "pull_subscriptions" {
@@ -76,7 +76,7 @@ variable "pull_subscriptions" {
     subscription_labels          = map(string)
   })
   description = "The list of the pull subscriptions."
-  default     = {}
+  default     = null
 }
 
 variable "topic_message_retention_duration" {
