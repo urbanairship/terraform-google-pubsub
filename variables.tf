@@ -59,18 +59,18 @@ variable "push_subscriptions" {
   }))
   description = "The list of the push subscriptions."
   default = [{
-    name                       = null
-    ack_deadline_seconds       = null
-    push_endpoint              = null
-    x-goog-version             = null
-    oidc_service_account_email = null
-    audience                   = null
-    expiration_policy          = null
-    dead_letter_topic          = null
-    max_delivery_attempts      = null
-    maximum_backoff            = null
-    minimum_backoff            = null
-    filter                     = null
+    name                       = ""
+    ack_deadline_seconds       = ""
+    push_endpoint              = ""
+    x-goog-version             = ""
+    oidc_service_account_email = ""
+    audience                   = ""
+    expiration_policy          = ""
+    dead_letter_topic          = ""
+    max_delivery_attempts      = ""
+    maximum_backoff            = ""
+    minimum_backoff            = ""
+    filter                     = ""
   subscription_labels = null }]
 }
 
@@ -90,16 +90,16 @@ variable "pull_subscriptions" {
   }))
   description = "The list of the pull subscriptions."
   default = [{
-    name                         = null
-    ack_deadline_seconds         = null
-    dead_letter_topic            = null
-    max_delivery_attempts        = null
-    maximum_backoff              = null
-    minimum_backoff              = null
-    filter                       = null
-    enable_message_ordering      = null
-    service_account              = null
-    enable_exactly_once_delivery = null
+    name                         = ""
+    ack_deadline_seconds         = ""
+    dead_letter_topic            = ""
+    max_delivery_attempts        = ""
+    maximum_backoff              = ""
+    minimum_backoff              = ""
+    filter                       = ""
+    enable_message_ordering      = ""
+    service_account              = ""
+    enable_exactly_once_delivery = ""
   subscription_labels = null }]
 }
 
