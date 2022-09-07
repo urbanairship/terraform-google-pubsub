@@ -55,7 +55,7 @@ variable "push_subscriptions" {
     maximum_backoff            = string
     minimum_backoff            = string
     filter                     = string
-    subscription_labels        = map(string)
+    subscription_labels        = object(map(string))
   })))
   description = "The list of the push subscriptions."
   default     = []
@@ -73,7 +73,7 @@ variable "pull_subscriptions" {
     enable_message_ordering      = string
     service_account              = string
     enable_exactly_once_delivery = string
-    subscription_labels          = map(string)
+    subscription_labels          = object(map(string))
   })))
   description = "The list of the pull subscriptions."
   default     = []
