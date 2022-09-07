@@ -53,12 +53,6 @@ variable "pull_subscriptions" {
   default     = []
 }
 
-variable "subscription_labels" {
-  type        = map(string)
-  description = "A map of labels to assign to every Pub/Sub subscription."
-  default     = {}
-}
-
 variable "topic_message_retention_duration" {
   type        = string
   description = "The minimum duration in seconds to retain a message after it is published to the topic."
