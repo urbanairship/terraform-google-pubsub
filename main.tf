@@ -25,6 +25,7 @@ data "google_project" "project" {
 }
 
 locals {
+  default_subscription_label   = { managed_by : "terraform" }
   default_ack_deadline_seconds = 10
   pubsub_svc_account_email     = "service-${data.google_project.project.number}@gcp-sa-pubsub.iam.gserviceaccount.com"
 }
@@ -127,7 +128,11 @@ resource "google_pubsub_subscription" "push_subscriptions" {
   name    = each.value.name
   topic   = var.create_topic ? google_pubsub_topic.topic.0.name : var.topic
   project = var.project_id
-  labels  = var.subscription_labels
+  labels = lookup(
+    each.value,
+    "subscriptions_labels",
+    local.default_subscription_label,
+  )
   ack_deadline_seconds = lookup(
     each.value,
     "ack_deadline_seconds",
