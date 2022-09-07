@@ -43,64 +43,20 @@ variable "topic_labels" {
 
 variable "push_subscriptions" {
   type = list(object({
-    name                       = string
-    ack_deadline_seconds       = string
-    push_endpoint              = string
-    x-goog-version             = string
-    oidc_service_account_email = string
-    audience                   = string
-    expiration_policy          = string
-    dead_letter_topic          = string
-    max_delivery_attempts      = string
-    maximum_backoff            = string
-    minimum_backoff            = string
-    filter                     = string
-    subscription_labels        = map(string)
+    subscription_attributes = map(string)
+    subscription_labels     = map(string)
   }))
   description = "The list of the push subscriptions."
-  default = [{
-    name                       = ""
-    ack_deadline_seconds       = ""
-    push_endpoint              = ""
-    x-goog-version             = ""
-    oidc_service_account_email = ""
-    audience                   = ""
-    expiration_policy          = ""
-    dead_letter_topic          = ""
-    max_delivery_attempts      = ""
-    maximum_backoff            = ""
-    minimum_backoff            = ""
-    filter                     = ""
-  subscription_labels = null }]
+  default     = []
 }
 
 variable "pull_subscriptions" {
   type = list(object({
-    name                         = string
-    ack_deadline_seconds         = string
-    dead_letter_topic            = string
-    max_delivery_attempts        = string
-    maximum_backoff              = string
-    minimum_backoff              = string
-    filter                       = string
-    enable_message_ordering      = string
-    service_account              = string
-    enable_exactly_once_delivery = string
-    subscription_labels          = map(string)
+    subscription_attributes = map(string)
+    subscription_labels     = map(string)
   }))
   description = "The list of the pull subscriptions."
-  default = [{
-    name                         = ""
-    ack_deadline_seconds         = ""
-    dead_letter_topic            = ""
-    max_delivery_attempts        = ""
-    maximum_backoff              = ""
-    minimum_backoff              = ""
-    filter                       = ""
-    enable_message_ordering      = ""
-    service_account              = ""
-    enable_exactly_once_delivery = ""
-  subscription_labels = null }]
+  default     = []
 }
 
 variable "topic_message_retention_duration" {
