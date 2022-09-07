@@ -42,13 +42,13 @@ variable "topic_labels" {
 }
 
 variable "push_subscriptions" {
-  type        = list(map(any))
+  type        = list(map(object))
   description = "The list of the push subscriptions."
   default     = []
 }
 
 variable "pull_subscriptions" {
-  type        = list(map(any))
+  type        = list(map(object))
   description = "The list of the pull subscriptions."
   default     = []
 }
