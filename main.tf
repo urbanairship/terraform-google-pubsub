@@ -128,10 +128,8 @@ resource "google_pubsub_subscription" "push_subscriptions" {
   name    = each.value.subscription_details.name
   topic   = var.create_topic ? google_pubsub_topic.topic.0.name : var.topic
   project = var.project_id
-  labels = lookup(
-    each.value.subscription_labels,
-    local.default_subscription_label,
-  )
+  labels = each.value.subscription_labels
+
   ack_deadline_seconds = lookup(
     each.value.subscription_details,
     "ack_deadline_seconds",
@@ -204,10 +202,7 @@ resource "google_pubsub_subscription" "pull_subscriptions" {
   name    = each.value.subscription_details.name
   topic   = var.create_topic ? google_pubsub_topic.topic.0.name : var.topic
   project = var.project_id
-  labels = lookup(
-    each.value.subscription_labels,
-    local.default_subscription_label,
-  )
+  labels = each.value.subscription_labels
   enable_exactly_once_delivery = lookup(
     each.value.subscription_details,
     "enable_exactly_once_delivery",
