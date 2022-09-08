@@ -130,67 +130,67 @@ resource "google_pubsub_subscription" "push_subscriptions" {
   project = var.project_id
   labels = lookup(
     each.value,
-    "subscriptions_labels",
+    "subscription_details.subscriptions_labels",
     local.default_subscription_label,
   )
   ack_deadline_seconds = lookup(
     each.value,
-    "ack_deadline_seconds",
+    "subscription_details.ack_deadline_seconds",
     local.default_ack_deadline_seconds,
   )
   message_retention_duration = lookup(
     each.value,
-    "message_retention_duration",
+    "subscription_details.message_retention_duration",
     null,
   )
   retain_acked_messages = lookup(
     each.value,
-    "retain_acked_messages",
+    "subscription_details.retain_acked_messages",
     null,
   )
   filter = lookup(
     each.value,
-    "filter",
+    "subscription_details.filter",
     null,
   )
   dynamic "expiration_policy" {
     // check if the 'expiration_policy' key exists, if yes, return a list containing it.
-    for_each = contains(keys(each.value), "expiration_policy") ? [each.value.expiration_policy] : []
+    for_each = contains(keys(each.value), "subscription_details.expiration_policy") ? [each.value.expiration_policy] : []
     content {
       ttl = expiration_policy.value
     }
   }
 
   dynamic "dead_letter_policy" {
-    for_each = (lookup(each.value, "dead_letter_topic", "") != "") ? [each.value.dead_letter_topic] : []
+    for_each = (lookup(each.value, "subscription_details.dead_letter_topic", "") != "") ? [each.value.dead_letter_topic] : []
     content {
-      dead_letter_topic     = lookup(each.value, "dead_letter_topic", "")
-      max_delivery_attempts = lookup(each.value, "max_delivery_attempts", "5")
+      dead_letter_topic     = lookup(each.value, "subscription_details.dead_letter_topic", "")
+      max_delivery_attempts = lookup(each.value, "subscription_details.max_delivery_attempts", "5")
     }
   }
 
   dynamic "retry_policy" {
-    for_each = (lookup(each.value, "maximum_backoff", "") != "") ? [each.value.maximum_backoff] : []
+    for_each = (lookup(each.value, "subscription_details.maximum_backoff", "") != "") ? [each.value.maximum_backoff] : []
     content {
-      maximum_backoff = lookup(each.value, "maximum_backoff", "")
-      minimum_backoff = lookup(each.value, "minimum_backoff", "")
+      maximum_backoff = lookup(each.value, "subscription_details.maximum_backoff", "")
+      minimum_backoff = lookup(each.value, "subscription_details.minimum_backoff", "")
     }
   }
 
   push_config {
-    push_endpoint = each.value["push_endpoint"]
+    push_endpoint = each.value["subscription_details.push_endpoint"]
 
     // FIXME: This should be programmable, but nested map isn't supported at this time.
     //   https://github.com/hashicorp/terraform/issues/2114
     attributes = {
-      x-goog-version = lookup(each.value, "x-goog-version", "v1")
+      x-goog-version = lookup(each.value, "subscription_details.x-goog-version", "v1")
     }
 
     dynamic "oidc_token" {
-      for_each = (lookup(each.value, "oidc_service_account_email", "") != "") ? [true] : []
+      for_each = (lookup(each.value, "subscription_details.oidc_service_account_email", "") != "") ? [true] : []
       content {
-        service_account_email = lookup(each.value, "oidc_service_account_email", "")
-        audience              = lookup(each.value, "audience", "")
+        service_account_email = lookup(each.value, "subscription_details.oidc_service_account_email", "")
+        audience              = lookup(each.value, "subscription_details.audience", "")
       }
     }
   }
@@ -212,55 +212,55 @@ resource "google_pubsub_subscription" "pull_subscriptions" {
   )
   enable_exactly_once_delivery = lookup(
     each.value,
-    "enable_exactly_once_delivery",
+    "subscription_details.enable_exactly_once_delivery",
     null,
   )
   ack_deadline_seconds = lookup(
     each.value,
-    "ack_deadline_seconds",
+    "subscription_details.ack_deadline_seconds",
     local.default_ack_deadline_seconds,
   )
   message_retention_duration = lookup(
     each.value,
-    "message_retention_duration",
+    "subscription_details.message_retention_duration",
     null,
   )
   retain_acked_messages = lookup(
     each.value,
-    "retain_acked_messages",
+    "subscription_details.retain_acked_messages",
     null,
   )
   filter = lookup(
     each.value,
-    "filter",
+    "subscription_details.filter",
     null,
   )
   enable_message_ordering = lookup(
     each.value,
-    "enable_message_ordering",
+    "subscription_details.enable_message_ordering",
     null,
   )
   dynamic "expiration_policy" {
     // check if the 'expiration_policy' key exists, if yes, return a list containing it.
-    for_each = contains(keys(each.value), "expiration_policy") ? [each.value.expiration_policy] : []
+    for_each = contains(keys(each.value), "subscription_details.expiration_policy") ? [each.value.expiration_policy] : []
     content {
       ttl = expiration_policy.value
     }
   }
 
   dynamic "dead_letter_policy" {
-    for_each = (lookup(each.value, "dead_letter_topic", "") != "") ? [each.value.dead_letter_topic] : []
+    for_each = (lookup(each.value, "subscription_details.dead_letter_topic", "") != "") ? [each.value.dead_letter_topic] : []
     content {
-      dead_letter_topic     = lookup(each.value, "dead_letter_topic", "")
-      max_delivery_attempts = lookup(each.value, "max_delivery_attempts", "5")
+      dead_letter_topic     = lookup(each.value, "subscription_details.dead_letter_topic", "")
+      max_delivery_attempts = lookup(each.value, "subscription_details.max_delivery_attempts", "5")
     }
   }
 
   dynamic "retry_policy" {
-    for_each = (lookup(each.value, "maximum_backoff", "") != "") ? [each.value.maximum_backoff] : []
+    for_each = (lookup(each.value, "subscription_details.maximum_backoff", "") != "") ? [each.value.maximum_backoff] : []
     content {
-      maximum_backoff = lookup(each.value, "maximum_backoff", "")
-      minimum_backoff = lookup(each.value, "minimum_backoff", "")
+      maximum_backoff = lookup(each.value, "subscription_details.maximum_backoff", "")
+      minimum_backoff = lookup(each.value, "subscription_details.minimum_backoff", "")
     }
   }
 

@@ -43,19 +43,19 @@ variable "topic_labels" {
 
 variable "push_subscriptions" {
   type = list(object({
-    subscription_attributes = map(string)
+    subscription_details    = map(string)
     subscription_labels     = map(string)
   }))
-  description = "The list of the push subscriptions."
+  description = "The list of the push subscriptions and it's labels."
   default     = []
 }
 
 variable "pull_subscriptions" {
   type = list(object({
-    subscription_attributes = map(string)
+    subscription_details    = map(string)
     subscription_labels     = map(string)
   }))
-  description = "The list of the pull subscriptions."
+  description = "The list of the pull subscriptions and it's labels."
   default     = []
 }
 
