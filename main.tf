@@ -27,7 +27,6 @@ data "google_project" "project" {
 locals {
   default_subscription_label   = { "managed_by" : "terraform" }
   default_ack_deadline_seconds = 10
-  pubsub_svc_account_email     = "service-${data.google_project.project.number}@gcp-sa-pubsub.iam.gserviceaccount.com"
 }
 
 resource "google_pubsub_schema" "schema" {
@@ -38,64 +37,6 @@ resource "google_pubsub_schema" "schema" {
   definition = var.schema.definition
 }
 
-
-resource "google_project_iam_member" "token_creator_binding" {
-  count   = var.grant_token_creator ? 1 : 0
-  project = var.project_id
-  role    = "roles/iam.serviceAccountTokenCreator"
-  member  = "serviceAccount:${local.pubsub_svc_account_email}"
-  depends_on = [
-    google_pubsub_subscription.push_subscriptions,
-  ]
-}
-
-resource "google_pubsub_topic_iam_member" "push_topic_binding" {
-  for_each = var.create_topic ? { for i in var.push_subscriptions : i.subscription_details.name => i } : {}
-
-  project = var.project_id
-  topic   = lookup(each.value.subscription_details, "dead_letter_topic", "projects/${var.project_id}/topics/${var.topic}")
-  role    = "roles/pubsub.publisher"
-  member  = "serviceAccount:${local.pubsub_svc_account_email}"
-  depends_on = [
-    google_pubsub_topic.topic,
-  ]
-}
-
-resource "google_pubsub_topic_iam_member" "pull_topic_binding" {
-  for_each = var.create_topic ? { for i in var.pull_subscriptions : i.subscription_details.name => i } : {}
-
-  project = var.project_id
-  topic   = lookup(each.value, "subscription_details.dead_letter_topic", "projects/${var.project_id}/topics/${var.topic}")
-  role    = "roles/pubsub.publisher"
-  member  = "serviceAccount:${local.pubsub_svc_account_email}"
-  depends_on = [
-    google_pubsub_topic.topic,
-  ]
-}
-
-resource "google_pubsub_subscription_iam_member" "pull_subscription_binding" {
-  for_each = var.create_subscriptions ? { for i in var.pull_subscriptions : i.subscription_details.name => i } : {}
-
-  project      = var.project_id
-  subscription = each.value.subscription_details.name
-  role         = "roles/pubsub.subscriber"
-  member       = "serviceAccount:${local.pubsub_svc_account_email}"
-  depends_on = [
-    google_pubsub_subscription.pull_subscriptions,
-  ]
-}
-
-resource "google_pubsub_subscription_iam_member" "push_subscription_binding" {
-  for_each = var.create_subscriptions ? { for i in var.push_subscriptions : i.subscription_details.name => i } : {}
-
-  project      = var.project_id
-  subscription = each.value.subscription_details.name
-  role         = "roles/pubsub.subscriber"
-  member       = "serviceAccount:${local.pubsub_svc_account_email}"
-  depends_on = [
-    google_pubsub_subscription.push_subscriptions,
-  ]
-}
 
 resource "google_pubsub_topic" "topic" {
   count                      = var.create_topic ? 1 : 0
