@@ -42,7 +42,7 @@ resource "google_pubsub_topic" "topic" {
   count                      = var.create_topic ? 1 : 0
   project                    = var.project_id
   name                       = var.topic
-  labels                     = var.topic_labels
+  labels                     = merge(default_subscription_label, var.topic_labels)
   kms_key_name               = var.topic_kms_key_name
   message_retention_duration = var.topic_message_retention_duration
 
@@ -69,7 +69,7 @@ resource "google_pubsub_subscription" "push_subscriptions" {
   name    = each.value.subscription_details.name
   topic   = var.create_topic ? google_pubsub_topic.topic.0.name : var.topic
   project = var.project_id
-  labels = each.value.subscription_labels
+  labels = merge(default_subscription_label,each.value.subscription_labels)
 
   ack_deadline_seconds = lookup(
     each.value.subscription_details,
@@ -143,7 +143,7 @@ resource "google_pubsub_subscription" "pull_subscriptions" {
   name    = each.value.subscription_details.name
   topic   = var.create_topic ? google_pubsub_topic.topic.0.name : var.topic
   project = var.project_id
-  labels = each.value.subscription_labels
+  labels = merge(default_subscription_label, each.value.subscription_labels)
   enable_exactly_once_delivery = lookup(
     each.value.subscription_details,
     "enable_exactly_once_delivery",
